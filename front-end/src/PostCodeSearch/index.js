@@ -17,13 +17,13 @@ export default class PostCodeSearch extends React.Component {
   handleChange(event) {
     const { name, value } = event.target;
 
-    if (this.isPostCodeValid(value)) {
-      this.setState({
-        [name]: value
-      });
-    } else {
+    this.setState({
+      [name]: value
+    });
+
+    if (name === 'postCode') {
       this.setState({ 
-        postCodeError: true
+        postCodeError: !this.isPostCodeValid(value)
       });
     }
     
