@@ -35,7 +35,7 @@ cd front-end && npm start or yarn start
 ```
 Step 3: Remove unwanted code, after removing  
 ```js
-// App.js
+// front-end/src/App.js
 
 import React from 'react';
 import './App.css';
@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
+        Hello
       </header>
     </div>
   );
@@ -55,7 +55,7 @@ export default App;
 ```
 
 ```css
-// App.css
+// front-end/src/App.css
 
 .App {
   text-align: center;
@@ -78,10 +78,46 @@ yarn add spectre.css @react-spectre/button or npm install spectre.css @react-spe
 ```
 Step 5: Import CSS library into our application on the top 
 ```css
-// App.css
+// front-end/src/App.css
 
 @import '~spectre.css/dist/spectre.min.css';
 
+```
+Step 6: Create a new PostCodeSearch component
+
+```
+mkdir src/PostCodeSearch && cd src/PostCodeSearch && touch index.js && cd ../../
+```
+Step 7: Add below code 
+
+```js
+// front-end/src/PostCodeSearch/index.js
+
+import React from 'react';
+
+export default class PostCodeSearch extends React.Component {
+  render() {
+    return (<h2>Now you can see PostCodeComponent</h2>);
+  }
+}
+
+// front-end/src/App.js
+import PostCodeSearch from './PostCodeSearch';
+import React from 'react';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        Hello
+        <PostCodeSearch />
+      </header>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 
