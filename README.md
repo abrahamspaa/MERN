@@ -181,13 +181,17 @@ Step 9: Add Post Code Validation and Submit Validation
   handleChange(event) {
     const { name, value } = event.target;
 
-    if (this.isPostCodeValid(value)) {
-      this.setState({
-        [name]: value
-      });
-    } else {
+    this.setState({
+      [name]: value
+    });
+
+    if (name === 'postCode' && !this.isPostCodeValid(value)) {
       this.setState({ 
         postCodeError: true
+      });
+    } else if (name === 'postCode') {
+      this.setState({ 
+        postCodeError: false
       });
     }
     
