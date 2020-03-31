@@ -20,4 +20,71 @@ Screen 2 for adding postcode and detail into the data base. Input will be post c
 
 ## Front End 
 
-We are using react libary as a front end.
+We are using react JavaScript libary as a front end.
+
+
+### How to create ?
+
+Step 1: Create React project. Below code will install all dependencies
+```
+npx create-react-app front-end
+```
+Step 2: To Start the application. (this will automatically opens React app on the browsers in new window) 
+```
+cd front-end && npm start or yarn start
+```
+Step 3: Remove unwanted code, after removing  
+```js
+// App.js
+
+import React from 'react';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+```css
+// App.css
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+```
+Step 4: Install CSS library we are going to use spectre here 
+```
+yarn add spectre.css @react-spectre/button or npm install spectre.css @react-spectre/button --save // this should be install inside front-end folder
+```
+Step 5: Import CSS library into our application on the top 
+```css
+// App.css
+
+@import '~spectre.css/dist/spectre.min.css';
+
+```
+
+
+
+
+
