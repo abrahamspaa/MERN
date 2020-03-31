@@ -1174,6 +1174,14 @@
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
+"@react-spectre/form@^1.0.0-16":
+  version "1.0.0-16"
+  resolved "https://registry.yarnpkg.com/@react-spectre/form/-/form-1.0.0-16.tgz#d55539540e1ece61d2e67e27fee1ac7c43e6e06a"
+  integrity sha512-NUFCoHTOW7DRRCls2iTCIbqBOPDtFnmzskdWhfaR9XGuNWIY6iL7QWOmvaKxawZ9QHkppPtAwaAsc5kU/4OVvw==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
