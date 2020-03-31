@@ -88,7 +88,7 @@ Step 6: Create a new PostCodeSearch component
 ```
 mkdir src/PostCodeSearch && cd src/PostCodeSearch && touch index.js && cd ../../
 ```
-Step 7: Add below code 
+Step 7: Import PostCodeSearch component into Main App
 
 ```js
 // front-end/src/PostCodeSearch/index.js
@@ -118,6 +118,49 @@ function App() {
 }
 
 export default App;
+```
+Step 8: Add PostCode fields and button 
+
+```js
+// front-end/src/PostCodeSearch/index.js
+
+import { FormGroup, Input } from '@react-spectre/form';
+import { Button } from '@react-spectre/button';
+import React from 'react';
+
+export default class PostCodeSearch extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      postCode: ''
+    };
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  render() {
+    return (
+      <form>
+        <FormGroup label="Postcode">
+          <Input 
+            name="postCode"
+            placeholder="Ex: 6000056" 
+            value={this.state.postCode} 
+            onChange={event => this.handleChange(event)} />
+        </FormGroup>
+
+        <Button primary loading={false}>Search</Button>
+      </form>
+    );
+  }
+}
 ```
 
 
