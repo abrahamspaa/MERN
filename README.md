@@ -110,7 +110,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Hello
+        Welcome to Search
         <PostCodeSearch />
       </header>
     </div>
@@ -184,14 +184,10 @@ Step 9: Add Post Code Validation and Submit Validation
     this.setState({
       [name]: value
     });
-
-    if (name === 'postCode' && !this.isPostCodeValid(value)) {
+    
+    if (name === 'postCode') {
       this.setState({ 
-        postCodeError: true
-      });
-    } else if (name === 'postCode') {
-      this.setState({ 
-        postCodeError: false
+        postCodeError: !this.isPostCodeValid(value)
       });
     }
     
