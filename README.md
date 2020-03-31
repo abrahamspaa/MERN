@@ -162,7 +162,76 @@ export default class PostCodeSearch extends React.Component {
   }
 }
 ```
+Step 9: Add Post Code Validation and Submit Validation 
 
+```js
+// front-end/src/PostCodeSearch/index.js
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      postCode: '',
+      postCodeError: false
+    };
+  }
+  
+  isPostCodeValid = postCode => new RegExp('^[1-9][0-9]{5}$').test(postCode);
+
+  handleChange(event) {
+    const { name, value } = event.target;
+
+    this.setState({
+      [name]: value
+    });
+
+    if (name === 'postCode' && !this.isPostCodeValid(value)) {
+      this.setState({ 
+        postCodeError: true
+      });
+    } else if (name === 'postCode') {
+      this.setState({ 
+        postCodeError: false
+      });
+    }
+    
+  }
+  
+  onSubmit(event) {
+
+    if (this.isPostCodeValid(this.state.postCode)) {
+      // Code for ajax
+    } else {
+      this.setState({ 
+        postCodeError: true
+      });
+    }
+
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={event => this.onSubmit(event)}>
+        <FormGroup label="Postcode" className={ this.state.postCodeError ? 'has-error' : '' }>
+          <Input 
+            name="postCode"
+            placeholder="Ex: 6000056" 
+            value={this.state.postCode} 
+            onChange={event => this.handleChange(event)} />
+          { 
+            this.state.postCodeError ? 
+              <p className='form-input-hint'>Please enter valid post code</p> : 
+              '' 
+          }
+        </FormGroup>
+
+        <Button primary loading={false}>Search</Button>
+      </form>
+    );
+  }
+}
+```
 
 
 
