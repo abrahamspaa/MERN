@@ -229,6 +229,17 @@ Step 9: Add Post Code Validation and Submit Validation
 }
 ```
 
+## Back End
 
+We will be using Express library and Node Js
+
+### How to create ?
+
+Step 1: Installation of [Node JS](https://nodejs.org/en/download/) 
+
+Step 2: Install Express JS and open http://localhost:3000/
+```
+npx express-generator back-end --no-view && cd back-end && npm i
+```
 
 
