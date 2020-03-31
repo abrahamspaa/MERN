@@ -26,7 +26,7 @@ export default class PostCodeSearch extends React.Component {
         postCodeError: !this.isPostCodeValid(value)
       });
     }
-    
+    event.preventDefault();
   }
 
   onSubmit(event) {
