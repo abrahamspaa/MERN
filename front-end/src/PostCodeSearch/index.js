@@ -64,7 +64,7 @@ export default class PostCodeSearch extends React.Component {
       <React.Fragment>
         { 
           this.state.error ? 
-            <div class='toast toast-error'>{this.state.error.message}</div> : 
+            <div className='toast toast-error'>{this.state.error.message}</div> : 
             '' 
         }
         <form onSubmit={event => this.onSubmit(event)}>
@@ -85,13 +85,13 @@ export default class PostCodeSearch extends React.Component {
         </form>
 
         {
-          this.state.data.map(({ office, type, district, state}) => (
-            <div class="card bg-primary m-1">
-              <div class="card-header">
-                <div class="card-title h5">{office}</div>
-                <div class="card-subtitle">{type}</div>
+          this.state.data.map(({ office, type, district, state }, index) => (
+            <div key={index.toString()} className="card bg-primary m-1">
+              <div className="card-header">
+                <div className="card-title h5">{office}</div>
+                <div className="card-subtitle">{type}</div>
               </div>
-              <div class="card-body">
+              <div className="card-body">
                 {district}, {state}
               </div>
             </div>
