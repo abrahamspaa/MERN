@@ -228,6 +228,105 @@ Step 9: Add Post Code Validation and Submit Validation
   }
 }
 ```
+Step 10: To Fetch the data, we need API's, so please follow Back End below till Step 5 to create a API and come back here.
+
+```js
+// front-end/src/PostCodeSearch/index.js
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+      postCode: '',
+      postCodeError: false
+    };
+  }
+  
+  handleChange(event) {
+    ....
+    if (name === 'postCode') {
+      this.setState({
+        data: [],
+        error: '',
+        postCodeError: !this.isPostCodeValid(value)
+      });
+    }
+  }
+  
+  async getPostCodeDetails(postcode) {
+    const host = 'http://localhost:3002',
+      url = `${host}/api/postcode?postcode=${postcode}`;
+  
+    return await (await (fetch(url))).json();
+  }
+
+  async onSubmit(event) {
+    event.preventDefault();
+
+    const postCode = this.state.postCode;
+
+    if (this.isPostCodeValid(postCode)) {
+      try {
+        const { error, data = [] } = await this.getPostCodeDetails(postCode);
+
+        this.setState({ data, error });
+      } catch (error) {
+        console.error('error', error);
+        this.setState({ error });
+      }
+    } else {
+      this.setState({ 
+        postCodeError: true
+      });
+    }
+  }
+  
+  render() {
+    return (
+      <React.Fragment>
+        { 
+          this.state.error ? 
+            <div class='toast toast-error'>{this.state.error.message}</div> : 
+            '' 
+        }
+        <form onSubmit={event => this.onSubmit(event)}>
+          <FormGroup label="Postcode" className={ this.state.postCodeError ? 'has-error' : '' }>
+            <Input 
+              name="postCode"
+              placeholder="Ex: 6000056" 
+              value={this.state.postCode} 
+              onChange={event => this.handleChange(event)} />
+            { 
+              this.state.postCodeError ? 
+                <p className='form-input-hint'>Please enter valid post code</p> : 
+                '' 
+            }
+          </FormGroup>
+
+          <Button primary loading={false}>Search</Button>
+        </form>
+
+        {
+          this.state.data.map(({ office, type, district, state}) => (
+            <div class="card bg-primary m-1">
+              <div class="card-header">
+                <div class="card-title h5">{office}</div>
+                <div class="card-subtitle">{type}</div>
+              </div>
+              <div class="card-body">
+                {district}, {state}
+              </div>
+            </div>
+          ))
+        }
+      </React.Fragment>
+    );
+  }
+
+```
+
+
 
 ## Back End
 
@@ -237,15 +336,33 @@ We will be using Express library and Node Js
 
 Step 1: Installation of [Node JS](https://nodejs.org/en/download/) 
 
-Step 2: Install Express JS and open http://localhost:3000/
+Step 2: Install Express JS and open http://localhost:3002/
 ```
-npx express-generator back-end --no-view && cd back-end && npm i && npm start
+npx express-generator back-end --no-view && cd back-end && npm i or yarn && npm i cors or yarn add cors
 ```
+```js
+// back-end/bin/www
+// change 3000 to 3002
+
+var port = normalizePort(process.env.PORT || '3002');
+
+// back-end/app.js
+const cors = require('cors');
+...
+var app = express();
+
+app.use(cors());
+app.use(logger('dev'));
+```
+```
+npm start or yarn start
+```
+
 Step 3: Create a route postcode api
 ```
 mkdir back-end/routes/postcode && cd back-end/routes/postcode && touch index.js
 ```
-Step 4: Code for postcode. After the change the code please stop(cntrl + c) and start (npm start) server in terminal or command prompt 
+Step 4: Code for postcode. After the every change in the code please stop(cntrl + c) and start (npm start or yarn start) server in terminal or command prompt 
 ```js
 // back-end/routes/postcode/index.js
 
@@ -258,7 +375,6 @@ router.get('/', function(req, res, next) {
 module.exports = router;
 
 // back-end/app.js
-
 var usersRouter = require('./routes/users');
 const postCodeRouter = require('./routes/postcode');
 
