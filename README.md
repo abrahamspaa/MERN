@@ -287,7 +287,7 @@ Step 10: To Fetch the data, we need API's, so please follow Back End below till 
       <React.Fragment>
         { 
           this.state.error ? 
-            <div class='toast toast-error'>{this.state.error.message}</div> : 
+            <div className='toast toast-error'>{this.state.error.message}</div> : 
             '' 
         }
         <form onSubmit={event => this.onSubmit(event)}>
@@ -308,13 +308,13 @@ Step 10: To Fetch the data, we need API's, so please follow Back End below till 
         </form>
 
         {
-          this.state.data.map(({ office, type, district, state}) => (
-            <div class="card bg-primary m-1">
-              <div class="card-header">
-                <div class="card-title h5">{office}</div>
-                <div class="card-subtitle">{type}</div>
+          this.state.data.map(({ office, type, district, state }, index) => (
+            <div key={index.toString()} className="card bg-primary m-1">
+              <div className="card-header">
+                <div className="card-title h5">{office}</div>
+                <div className="card-subtitle">{type}</div>
               </div>
-              <div class="card-body">
+              <div className="card-body">
                 {district}, {state}
               </div>
             </div>
@@ -525,6 +525,42 @@ mongo
       }
 ])
 ```
+Step 8: Wiring up model and controller 
 
+```js
+// back-end/routes/postcode/index.js 
+
+const router = require('express').Router();
+const model = require('./model');
+
+router.get('/', async function(request, respond) {
+  const postcode = request.query.postcode;
+
+  try {
+    const postOffices = await model.find({ code: postcode })
+
+    if (postOffices && postOffices.length) {
+      return respond.send({
+        data: postOffices
+      });
+    } else {
+      return respond.status(404).send({
+        error: {
+          message: `The ${postcode} not Found..!`
+        }
+      });    
+    }
+  } catch (error) {
+    console.error(error)
+    return respond.status(500).send({
+      error: {
+        message: `Server error ${error}`
+      }
+    }); 
+  }
+});
+
+module.exports = router;
+```
 
 
