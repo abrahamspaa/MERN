@@ -239,7 +239,35 @@ Step 1: Installation of [Node JS](https://nodejs.org/en/download/)
 
 Step 2: Install Express JS and open http://localhost:3000/
 ```
-npx express-generator back-end --no-view && cd back-end && npm i
+npx express-generator back-end --no-view && cd back-end && npm i && npm start
 ```
+Step 3: Create a route postcode api
+```
+mkdir back-end/routes/postcode && cd back-end/routes/postcode && touch index.js
+```
+Step 4: Code for postcode. After the change the code please stop(cntrl + c) and start (npm start) server in terminal or command prompt 
+```js
+// back-end/routes/postcode/index.js
+
+const router = require('express').Router();
+
+router.get('/', function(req, res, next) {
+  res.send('Post code value');
+});
+
+module.exports = router;
+
+// back-end/app.js
+
+var usersRouter = require('./routes/users');
+const postCodeRouter = require('./routes/postcode');
+
+....
+
+app.use('/users', usersRouter);
+app.use('/api/postcode', postCodeRouter);
+
+```
+
 
 
