@@ -431,6 +431,29 @@ router.get('/', function(request, respond) {
   
 });
 ```
+Step 6: Install mongodb - [Read More](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) Connecting to mongodb 
+```
+yarn add mongoose or npm i mongoose
+```
+```js
+//back-end/App.js
 
+const mongoose = require('mongoose');
+ 
+mongoose.connect(
+  'mongodb://localhost:27017/postcode', 
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, 
+  err => {
+    if (!err) {
+      console.log('Successfully Established Connection with MongoDB')
+    } else {
+      console.log(`Failed to Establish Connection with MongoDB with Error: ${err}`)
+    }
+  }
+);
+```
 
 
