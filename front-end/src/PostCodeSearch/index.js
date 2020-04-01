@@ -7,6 +7,7 @@ export default class PostCodeSearch extends React.Component {
     super(props);
 
     this.state = {
+      data: [],
       postCode: '',
       postCodeError: false
     };
@@ -22,44 +23,81 @@ export default class PostCodeSearch extends React.Component {
     });
 
     if (name === 'postCode') {
-      this.setState({ 
+      this.setState({
+        data: [],
+        error: '',
         postCodeError: !this.isPostCodeValid(value)
       });
     }
-    event.preventDefault();
   }
 
-  onSubmit(event) {
+  async getPostCodeDetails(postcode) {
+    const host = 'http://localhost:3002',
+      url = `${host}/api/postcode?postcode=${postcode}`;
+  
+    return await (await (fetch(url))).json();
+  }
 
-    if (this.isPostCodeValid(this.state.postCode)) {
-      // Code for ajax
+  async onSubmit(event) {
+    event.preventDefault();
+
+    const postCode = this.state.postCode;
+
+    if (this.isPostCodeValid(postCode)) {
+      try {
+        const { error, data = [] } = await this.getPostCodeDetails(postCode);
+
+        this.setState({ data, error });
+      } catch (error) {
+        console.error('error', error);
+        this.setState({ error });
+      }
     } else {
       this.setState({ 
         postCodeError: true
       });
     }
-
-    event.preventDefault();
   }
 
   render() {
     return (
-      <form onSubmit={event => this.onSubmit(event)}>
-        <FormGroup label="Postcode" className={ this.state.postCodeError ? 'has-error' : '' }>
-          <Input 
-            name="postCode"
-            placeholder="Ex: 6000056" 
-            value={this.state.postCode} 
-            onChange={event => this.handleChange(event)} />
-          { 
-            this.state.postCodeError ? 
-              <p className='form-input-hint'>Please enter valid post code</p> : 
-              '' 
-          }
-        </FormGroup>
+      <React.Fragment>
+        { 
+          this.state.error ? 
+            <div class='toast toast-error'>{this.state.error.message}</div> : 
+            '' 
+        }
+        <form onSubmit={event => this.onSubmit(event)}>
+          <FormGroup label="Postcode" className={ this.state.postCodeError ? 'has-error' : '' }>
+            <Input 
+              name="postCode"
+              placeholder="Ex: 6000056" 
+              value={this.state.postCode} 
+              onChange={event => this.handleChange(event)} />
+            { 
+              this.state.postCodeError ? 
+                <p className='form-input-hint'>Please enter valid post code</p> : 
+                '' 
+            }
+          </FormGroup>
 
-        <Button primary loading={false}>Search</Button>
-      </form>
+          <Button primary loading={false}>Search</Button>
+        </form>
+
+        {
+          this.state.data.map(({ office, type, district, state}) => (
+            <div class="card bg-primary m-1">
+              <div class="card-header">
+                <div class="card-title h5">{office}</div>
+                <div class="card-subtitle">{type}</div>
+              </div>
+              <div class="card-body">
+                {district}, {state}
+              </div>
+            </div>
+          ))
+        }
+      </React.Fragment>
     );
   }
 }
