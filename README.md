@@ -455,5 +455,76 @@ mongoose.connect(
   }
 );
 ```
+Step 7: Create model for postcode 
+```
+cd back-end/routes/postcode && touch model.js && cd ../../
+```
+```js 
+// back-end/routes/postcode/model.js 
+
+const { model, Schema } = require('mongoose');
+
+export default model('postpin', new Schema({
+  code: {
+    type: Number,
+    required: 'Post code is missing'
+  },
+  office: {
+    type: String, 
+    required: 'Post office is missing'
+  },
+  district: {
+    type: String, 
+    required: 'Post district is missing'
+  },
+  state: {
+    type: String, 
+    required: 'Post state is missing'
+  },
+  type: {
+    type: String, 
+    required: 'Type of post office is missing'
+  }
+}));
+```
+Step 8: Insert records for post code 
+
+```
+// mongo shell
+mongo
+
+> use postcode
+> db.postpins.insertMany([
+    {
+        code: 600056,
+        office: 'Iyyappanthangal',
+        type: 'Sub Office',
+        district: 'Kanchipuram',
+        state: 'Tamil Nadu'
+      },
+      {
+        code: 600056,
+        office: 'Kattupakkam',
+        type: 'Branch Office',
+        district: 'Tiruvallur',
+        state: 'Tamil Nadu'
+      },
+      {
+        code: 600056,
+        office: 'Poonamallee East',
+        type: 'Sub Office',
+        district: 'Tiruvallur',
+        state: 'Tamil Nadu'
+      },
+      {
+        code: 600056,
+        office: 'Senneerkuppam',
+        type: 'Branch Office',
+        district: 'Tiruvallur',
+        state: 'Tamil Nadu'
+      }
+])
+```
+
 
 
