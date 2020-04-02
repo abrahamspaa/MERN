@@ -74,7 +74,7 @@ export default App;
 ```
 Step 4: Install CSS library we are going to use spectre here 
 ```
-yarn add spectre.css @react-spectre/button or npm install spectre.css @react-spectre/button --save // this should be install inside front-end folder
+yarn add spectre.css @react-spectre/button @react-spectre/form or npm install spectre.css @react-spectre/button @react-spectre/form --save // this should be install inside front-end folder
 ```
 Step 5: Import CSS library into our application on the top 
 ```css
